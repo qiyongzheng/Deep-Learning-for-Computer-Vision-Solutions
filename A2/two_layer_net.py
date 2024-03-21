@@ -232,13 +232,13 @@ def nn_forward_backward(params, X, y=None, reg=0.0):
     dscores = (P - Y) / N
     
     dW2 = torch.mm(h1.T, dscores) 
-    db2 = torch.sum(dscores, axis=0, keepdim=True) 
+    db2 = torch.sum(dscores, axis=0) 
 
     dhidden = torch.mm(dscores, W2.T)
     dhidden[h1 <= 0] = 0
 
     dW1 = torch.mm(X.T, dhidden)
-    db1 = torch.sum(dhidden, axis=0, keepdims=True)
+    db1 = torch.sum(dhidden, axis=0)
 
     dW2 += 2 * reg * W2
     dW1 += 2 * reg * W1
